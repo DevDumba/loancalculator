@@ -59,6 +59,7 @@ public class RequestController {
             requestDto = requestMapper.toDto(existedRequest.get());
             return ResponseEntity.ok().body(requestDto);
         } else {
+            //call the service method
             requestDto = requestService.calculate(loanAmount, interestRate, numOfPayments, paymentFreq);
             return ResponseEntity.created(new URI("/api/request")).body(requestDto);
         }
