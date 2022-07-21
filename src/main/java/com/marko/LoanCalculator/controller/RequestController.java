@@ -55,11 +55,12 @@ public class RequestController {
                 loanAmount, interestRate, numOfPayments, paymentFreq);
         Optional<Request> existedRequest = requestRepository.findExisted(loanAmount, interestRate, numOfPayments, paymentFreq);
         RequestDto requestDto;
+        //if that request already exists, do not save, just return to response
         if(existedRequest.isPresent()) {
             requestDto = requestMapper.toDto(existedRequest.get());
             return ResponseEntity.ok().body(requestDto);
         } else {
-            //call the service method
+            //call the service method to calculate and save request and results
             requestDto = requestService.calculate(loanAmount, interestRate, numOfPayments, paymentFreq);
             return ResponseEntity.created(new URI("/api/request")).body(requestDto);
         }
