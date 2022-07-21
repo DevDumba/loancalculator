@@ -73,12 +73,14 @@ public class RequestControllerIT extends BaseIntegrationTest {
         ResultDto result = requestDto.getResult();
         assertEquals(21400.6, result.getTotalPayments());
         assertEquals(1400.6, result.getTotalInterest());
+
         //check first schedule
         ScheduleDto firstSchedule = result.getSchedule().get(0);
         assertEquals(2140.06, firstSchedule.getPaymentAmount());
         assertEquals(1890.06, firstSchedule.getPrincipalAmount());
         assertEquals(250.0, firstSchedule.getInterestAmount());
         assertEquals(18109.94, firstSchedule.getBalanceOwed());
+
         //check last schedule
         ScheduleDto lastSchedule = result.getSchedule().stream().max(Comparator.comparing(ScheduleDto::getId)).get();
         assertEquals(2140.06, lastSchedule.getPaymentAmount());
